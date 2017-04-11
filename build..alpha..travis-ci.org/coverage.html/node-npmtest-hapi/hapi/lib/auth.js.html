@@ -1,0 +1,1877 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for node-npmtest-hapi/hapi/lib/auth.js</title>
+    <meta charset="utf-8">
+    <style>
+        body, html {
+            margin:0; padding: 0;
+        }
+        body {
+            font-family: Arial, Helvetica;
+            font-size: 10pt;
+        }
+        div.header, div.footer {
+            background: #eee;
+            padding: 1em;
+        }
+        div.header {
+            height: 160px;
+            padding: 0 1em 0 1em;
+            z-index: 100;
+            position: fixed;
+            top: 0;
+            border-bottom: 1px solid #666;
+            width: 100%;
+        }
+        div.footer {
+            border-top: 1px solid #666;
+        }
+        div.body {
+            margin-top: 170px;
+        }
+        div.meta {
+            font-size: 90%;
+            text-align: center;
+        }
+        h1, h2, h3 {
+            font-weight: normal;
+        }
+        h1 {
+            font-size: 12pt;
+        }
+        h2 {
+            font-size: 10pt;
+        }
+        pre {
+            font-family: Menlo, Monaco, Consolas, Courier New, monospace;
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+            tab-size: 2;
+        }
+
+        div.path { font-size: 110%; }
+        div.path a:link, div.path a:visited { color: #000; }
+        table.coverage { border-collapse: collapse; margin:0; padding: 0 }
+
+        table.coverage td {
+            margin: 0;
+            padding: 0;
+            color: #111;
+            vertical-align: top;
+        }
+        table.coverage td.line-count {
+            width: 50px;
+            text-align: right;
+            padding-right: 5px;
+        }
+        table.coverage td.line-coverage {
+            color: #777 !important;
+            text-align: right;
+            border-left: 1px solid #666;
+            border-right: 1px solid #666;
+        }
+
+        table.coverage td.text {
+        }
+
+        table.coverage td span.cline-any {
+            display: inline-block;
+            padding: 0 5px;
+            width: 40px;
+        }
+        table.coverage td span.cline-neutral {
+            background: #eee;
+        }
+        table.coverage td span.cline-yes {
+            background: #b5d592;
+            color: #999;
+        }
+        table.coverage td span.cline-no {
+            background: #fc8c84;
+        }
+
+        .cstat-yes { color: #111; }
+        .cstat-no { background: #fc8c84; color: #111; }
+        .fstat-no { background: #ffc520; color: #111 !important; }
+        .cbranch-no { background:  yellow !important; color: #111; }
+
+        .cstat-skip { background: #ddd; color: #111; }
+        .fstat-skip { background: #ddd; color: #111 !important; }
+        .cbranch-skip { background: #ddd !important; color: #111; }
+
+        .missing-if-branch {
+            display: inline-block;
+            margin-right: 10px;
+            position: relative;
+            padding: 0 4px;
+            background: black;
+            color: yellow;
+        }
+
+        .skip-if-branch {
+            display: none;
+            margin-right: 10px;
+            position: relative;
+            padding: 0 4px;
+            background: #ccc;
+            color: white;
+        }
+
+        .missing-if-branch .typ, .skip-if-branch .typ {
+            color: inherit !important;
+        }
+
+        .entity, .metric { font-weight: bold; }
+        .metric { display: inline-block; border: 1px solid #333; padding: 0.3em; background: white; }
+        .metric small { font-size: 80%; font-weight: normal; color: #666; }
+
+        div.coverage-summary table { border-collapse: collapse; margin: 3em; font-size: 110%; }
+        div.coverage-summary td, div.coverage-summary table  th { margin: 0; padding: 0.25em 1em; border-top: 1px solid #666; border-bottom: 1px solid #666; }
+        div.coverage-summary th { text-align: left; border: 1px solid #666; background: #eee; font-weight: normal; }
+        div.coverage-summary th.file { border-right: none !important; }
+        div.coverage-summary th.pic { border-left: none !important; text-align: right; }
+        div.coverage-summary th.pct { border-right: none !important; }
+        div.coverage-summary th.abs { border-left: none !important; text-align: right; }
+        div.coverage-summary td.pct { text-align: right; border-left: 1px solid #666; }
+        div.coverage-summary td.abs { text-align: right; font-size: 90%; color: #444; border-right: 1px solid #666; }
+        div.coverage-summary td.file { text-align: right; border-left: 1px solid #666; white-space: nowrap;  }
+        div.coverage-summary td.pic { min-width: 120px !important;  }
+        div.coverage-summary a:link { color: #000; }
+        div.coverage-summary a:visited { color: #333; }
+        div.coverage-summary tfoot td { border-top: 1px solid #666; }
+
+        div.coverage-summary .yui3-datatable-sort-indicator, div.coverage-summary .dummy-sort-indicator {
+            height: 10px;
+            width: 7px;
+            display: inline-block;
+            margin-left: 0.5em;
+        }
+        div.coverage-summary .yui3-datatable-sort-indicator {
+            background: no-repeat scroll 0 0 transparent;
+        }
+        div.coverage-summary .yui3-datatable-sorted .yui3-datatable-sort-indicator {
+            background-position: 0 -20px;
+        }
+        div.coverage-summary .yui3-datatable-sorted-desc .yui3-datatable-sort-indicator {
+            background-position: 0 -10px;
+        }
+
+        .high { background: #b5d592 !important; }
+        .medium { background: #ffe87c !important; }
+        .low { background: #fc8c84 !important; }
+
+        span.cover-fill, span.cover-empty {
+            display:inline-block;
+            border:1px solid #444;
+            background: white;
+            height: 12px;
+        }
+        span.cover-fill {
+            background: #ccc;
+            border-right: 1px solid #444;
+        }
+        span.cover-empty {
+            background: white;
+            border-left: none;
+        }
+        span.cover-full {
+            border-right: none !important;
+        }
+        pre.prettyprint {
+            border: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        .com { color: #999 !important; }
+        .ignore-none { color: #999; font-weight: normal; }
+
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1 style="font-weight: bold;">
+        <a href="https://github.com/npmtest/node-npmtest-hapi">npmtest-hapi (v0.0.1)</a>
+    </h1>
+    <h1>Code coverage report for <span class="entity">node-npmtest-hapi/hapi/lib/auth.js</span></h1>
+    <h2>
+        
+        Statements: <span class="metric">8.33% <small>(22 / 264)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Branches: <span class="metric">0% <small>(0 / 174)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Functions: <span class="metric">0% <small>(0 / 21)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Lines: <span class="metric">8.43% <small>(22 / 261)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">node-npmtest-hapi/hapi/lib/</a> &#187; auth.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549
+550
+551
+552</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict';
+&nbsp;
+// Load modules
+&nbsp;
+const Boom = require('boom');
+const Hoek = require('hoek');
+const Schema = require('./schema');
+&nbsp;
+&nbsp;
+// Declare internals
+&nbsp;
+const internals = {};
+&nbsp;
+&nbsp;
+exports = module.exports = internals.Auth = <span class="fstat-no" title="function not covered" >function (connection) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.connection = connection;</span>
+<span class="cstat-no" title="statement not covered" >    this._schemes = {};</span>
+<span class="cstat-no" title="statement not covered" >    this._strategies = {};</span>
+<span class="cstat-no" title="statement not covered" >    this.settings = {</span>
+        default: null           // Strategy used as default if route has no auth settings
+    };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.api = {};</span>
+};
+&nbsp;
+&nbsp;
+internals.Auth.prototype.scheme = <span class="fstat-no" title="function not covered" >function (name, scheme) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(name, 'Authentication scheme must have a name');</span>
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(!this._schemes[name], 'Authentication scheme name already exists:', name);</span>
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(typeof scheme === 'function', 'scheme must be a function:', name);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this._schemes[name] = scheme;</span>
+};
+&nbsp;
+&nbsp;
+internals.Auth.prototype.strategy = <span class="fstat-no" title="function not covered" >function (name, scheme /*, mode, options */) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    const hasMode = (typeof arguments[2] === 'string' || typeof arguments[2] === 'boolean');</span>
+<span class="cstat-no" title="statement not covered" >    const mode = (hasMode ? arguments[2] : false);</span>
+<span class="cstat-no" title="statement not covered" >    const options = (hasMode ? arguments[3] : arguments[2]) || null;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(name, 'Authentication strategy must have a name');</span>
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(name !== 'bypass', 'Cannot use reserved strategy name: bypass');</span>
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(!this._strategies[name], 'Authentication strategy name already exists');</span>
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(scheme, 'Authentication strategy', name, 'missing scheme');</span>
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(this._schemes[scheme], 'Authentication strategy', name, 'uses unknown scheme:', scheme);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    const server = this.connection.server._clone([this.connection], '');</span>
+<span class="cstat-no" title="statement not covered" >    const strategy = this._schemes[scheme](server, options);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(strategy.authenticate, 'Invalid scheme:', name, 'missing authenticate() method');</span>
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(typeof strategy.authenticate === 'function', 'Invalid scheme:', name, 'invalid authenticate() method');</span>
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(!strategy.payload || typeof strategy.payload === 'function', 'Invalid scheme:', name, 'invalid payload() method');</span>
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(!strategy.response || typeof strategy.response === 'function', 'Invalid scheme:', name, 'invalid response() method');</span>
+<span class="cstat-no" title="statement not covered" >    strategy.options = strategy.options || {};</span>
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(strategy.payload || !strategy.options.payload, 'Cannot require payload validation without a payload method');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this._strategies[name] = {</span>
+        methods: strategy,
+        realm: server.realm
+    };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (strategy.api) {</span>
+<span class="cstat-no" title="statement not covered" >        this.api[name] = strategy.api;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (mode) {</span>
+<span class="cstat-no" title="statement not covered" >        this.default({ strategies: [name], mode: mode === true ? 'required' : mode });</span>
+    }
+};
+&nbsp;
+&nbsp;
+internals.Auth.prototype.default = <span class="fstat-no" title="function not covered" >function (options) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(!this.settings.default, 'Cannot set default strategy more than once');</span>
+<span class="cstat-no" title="statement not covered" >    options = Schema.apply('auth', options, 'default strategy');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.settings.default = this._setupRoute(Hoek.clone(options)); </span>     // Can change options
+};
+&nbsp;
+&nbsp;
+internals.Auth.prototype.test = <span class="fstat-no" title="function not covered" >function (name, request, next) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(name, 'Missing authentication strategy name');</span>
+<span class="cstat-no" title="statement not covered" >    const strategy = this._strategies[name];</span>
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(strategy, 'Unknown authentication strategy:', name);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    const reply = request.server._replier.interface(request, strategy.realm, { data: true }, (response) =&gt; <span class="cstat-no" title="statement not covered" >next(response, reply._data &amp;&amp; reply._data.credentials))</span>;</span>
+<span class="cstat-no" title="statement not covered" >    strategy.methods.authenticate(request, reply);</span>
+};
+&nbsp;
+&nbsp;
+internals.Auth.prototype._setupRoute = <span class="fstat-no" title="function not covered" >function (options, path) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!options) {</span>
+<span class="cstat-no" title="statement not covered" >        return options; </span>        // Preserve the difference between undefined and false
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (typeof options === 'string') {</span>
+<span class="cstat-no" title="statement not covered" >        options = { strategies: [options] };</span>
+    }
+    else <span class="cstat-no" title="statement not covered" >if (options.strategy) {</span>
+<span class="cstat-no" title="statement not covered" >        options.strategies = [options.strategy];</span>
+<span class="cstat-no" title="statement not covered" >        delete options.strategy;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (path &amp;&amp;</span>
+        !options.strategies) {
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        Hoek.assert(this.settings.default, 'Route missing authentication strategy and no default defined:', path);</span>
+<span class="cstat-no" title="statement not covered" >        options = Hoek.applyToDefaults(this.settings.default, options);</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    path = path || 'default strategy';</span>
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(options.strategies &amp;&amp; options.strategies.length, 'Missing authentication strategy:', path);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    options.mode = options.mode || 'required';</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (options.entity !== undefined ||                                             // Backwards compatibility with &lt;= 11.x.x</span>
+        options.scope !== undefined) {
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        options.access = [{ entity: options.entity, scope: options.scope }];</span>
+<span class="cstat-no" title="statement not covered" >        delete options.entity;</span>
+<span class="cstat-no" title="statement not covered" >        delete options.scope;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (options.access) {</span>
+<span class="cstat-no" title="statement not covered" >        for (let i = 0; i &lt; options.access.length; ++i) {</span>
+<span class="cstat-no" title="statement not covered" >            const access = options.access[i];</span>
+<span class="cstat-no" title="statement not covered" >            access.scope = internals.setupScope(access);</span>
+        }
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (options.payload === true) {</span>
+<span class="cstat-no" title="statement not covered" >        options.payload = 'required';</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    let hasAuthenticatePayload = false;</span>
+<span class="cstat-no" title="statement not covered" >    for (let i = 0; i &lt; options.strategies.length; ++i) {</span>
+<span class="cstat-no" title="statement not covered" >        const name = options.strategies[i];</span>
+<span class="cstat-no" title="statement not covered" >        const strategy = this._strategies[name];</span>
+<span class="cstat-no" title="statement not covered" >        Hoek.assert(strategy, 'Unknown authentication strategy', name, 'in', path);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        Hoek.assert(strategy.methods.payload || options.payload !== 'required', 'Payload validation can only be required when all strategies support it in', path);</span>
+<span class="cstat-no" title="statement not covered" >        hasAuthenticatePayload = hasAuthenticatePayload || strategy.methods.payload;</span>
+<span class="cstat-no" title="statement not covered" >        Hoek.assert(!strategy.methods.options.payload || options.payload === undefined || options.payload === 'required', 'Cannot set authentication payload to', options.payload, 'when a strategy requires payload validation in', path);</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(!options.payload || hasAuthenticatePayload, 'Payload authentication requires at least one strategy with payload support in', path);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return options;</span>
+};
+&nbsp;
+&nbsp;
+internals.setupScope = <span class="fstat-no" title="function not covered" >function (access) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!access.scope) {</span>
+<span class="cstat-no" title="statement not covered" >        return false;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    const scope = {};</span>
+<span class="cstat-no" title="statement not covered" >    for (let i = 0; i &lt; access.scope.length; ++i) {</span>
+<span class="cstat-no" title="statement not covered" >        const value = access.scope[i];</span>
+<span class="cstat-no" title="statement not covered" >        const prefix = value[0];</span>
+<span class="cstat-no" title="statement not covered" >        const type = (prefix === '+' ? 'required' : (prefix === '!' ? 'forbidden' : 'selection'));</span>
+<span class="cstat-no" title="statement not covered" >        const clean = (type === 'selection' ? value : value.slice(1));</span>
+<span class="cstat-no" title="statement not covered" >        scope[type] = scope[type] || [];</span>
+<span class="cstat-no" title="statement not covered" >        scope[type].push(clean);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if ((!scope._parameters || !scope._parameters[type]) &amp;&amp;</span>
+            /{([^}]+)}/.test(clean)) {
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            scope._parameters = scope._parameters || {};</span>
+<span class="cstat-no" title="statement not covered" >            scope._parameters[type] = true;</span>
+        }
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return scope;</span>
+};
+&nbsp;
+&nbsp;
+internals.Auth.prototype.lookup = <span class="fstat-no" title="function not covered" >function (route) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (route.settings.auth === false) {</span>
+<span class="cstat-no" title="statement not covered" >        return false;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return route.settings.auth || this.settings.default;</span>
+};
+&nbsp;
+&nbsp;
+internals.Auth.authenticate = <span class="fstat-no" title="function not covered" >function (request, next) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    const auth = request.connection.auth;</span>
+<span class="cstat-no" title="statement not covered" >    return auth._authenticate(request, next);</span>
+};
+&nbsp;
+&nbsp;
+internals.Auth.access = <span class="fstat-no" title="function not covered" >function (request, route) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    const auth = request.connection.auth;</span>
+<span class="cstat-no" title="statement not covered" >    const config = auth.lookup(route);</span>
+<span class="cstat-no" title="statement not covered" >    if (!config) {</span>
+<span class="cstat-no" title="statement not covered" >        return true;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    const credentials = request.auth.credentials;</span>
+<span class="cstat-no" title="statement not covered" >    if (!credentials) {</span>
+<span class="cstat-no" title="statement not covered" >        return false;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return !internals.access(request, config, credentials, 'bypass');</span>
+};
+&nbsp;
+&nbsp;
+internals.Auth.prototype._authenticate = <span class="fstat-no" title="function not covered" >function (request, next) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    const config = this.lookup(request.route);</span>
+<span class="cstat-no" title="statement not covered" >    if (!config) {</span>
+<span class="cstat-no" title="statement not covered" >        return next();</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    const authenticator = new internals.Authenticator(config, request, this);</span>
+<span class="cstat-no" title="statement not covered" >    authenticator.authenticate(next);</span>
+};
+&nbsp;
+&nbsp;
+internals.Auth.payload = <span class="fstat-no" title="function not covered" >function (request, next) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!request.auth.isAuthenticated ||</span>
+        request.auth.strategy === 'bypass') {
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        return next();</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    const auth = request.connection.auth;</span>
+<span class="cstat-no" title="statement not covered" >    const strategy = auth._strategies[request.auth.strategy];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!strategy.methods.payload) {</span>
+<span class="cstat-no" title="statement not covered" >        return next();</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    const config = auth.lookup(request.route);</span>
+<span class="cstat-no" title="statement not covered" >    const setting = config.payload || (strategy.methods.options.payload ? 'required' : false);</span>
+<span class="cstat-no" title="statement not covered" >    if (!setting) {</span>
+<span class="cstat-no" title="statement not covered" >        return next();</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    const finalize = (response) =&gt; {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (response &amp;&amp;</span>
+            response.isBoom &amp;&amp;
+            response.isMissing) {
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            return next(setting === 'optional' ? null : Boom.unauthorized('Missing payload authentication'));</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        return next(response);</span>
+    };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    request._protect.run(finalize, (exit) =&gt; {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        const reply = request.server._replier.interface(request, strategy.realm, {}, exit);</span>
+<span class="cstat-no" title="statement not covered" >        strategy.methods.payload(request, reply);</span>
+    });
+};
+&nbsp;
+&nbsp;
+internals.Auth.response = <span class="fstat-no" title="function not covered" >function (request, next) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    const auth = request.connection.auth;</span>
+<span class="cstat-no" title="statement not covered" >    const config = auth.lookup(request.route);</span>
+<span class="cstat-no" title="statement not covered" >    if (!config ||</span>
+        !request.auth.isAuthenticated ||
+        request.auth.strategy === 'bypass') {
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        return next();</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    const strategy = auth._strategies[request.auth.strategy];</span>
+<span class="cstat-no" title="statement not covered" >    if (!strategy.methods.response) {</span>
+<span class="cstat-no" title="statement not covered" >        return next();</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    request._protect.run(next, (exit) =&gt; {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        const reply = request.server._replier.interface(request, strategy.realm, {}, exit);</span>
+<span class="cstat-no" title="statement not covered" >        strategy.methods.response(request, reply);</span>
+    });
+};
+&nbsp;
+&nbsp;
+internals.Authenticator = class {
+    constructor<span class="fstat-no" title="function not covered" >(config, request, manager) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        this.config = config;</span>
+<span class="cstat-no" title="statement not covered" >        this.request = request;</span>
+<span class="cstat-no" title="statement not covered" >        this.manager = manager;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        this.errors = [];</span>
+<span class="cstat-no" title="statement not covered" >        this.current = -1;</span>
+    }
+&nbsp;
+    authenticate<span class="fstat-no" title="function not covered" >(next) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        this.request.auth.mode = this.config.mode;</span>
+&nbsp;
+        // Injection bypass
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (this.request.auth.credentials) {</span>
+<span class="cstat-no" title="statement not covered" >            return this.validate(null, { credentials: this.request.auth.credentials, artifacts: this.request.auth.artifacts }, next);</span>
+        }
+&nbsp;
+        // Authenticate
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        return this.execute(next);</span>
+    }
+&nbsp;
+    execute<span class="fstat-no" title="function not covered" >(next) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        const config = this.config;</span>
+<span class="cstat-no" title="statement not covered" >        const request = this.request;</span>
+&nbsp;
+        // Find next strategy
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        ++this.current;</span>
+<span class="cstat-no" title="statement not covered" >        if (this.current &lt; config.strategies.length) {</span>
+<span class="cstat-no" title="statement not covered" >            const name = config.strategies[this.current];</span>
+<span class="cstat-no" title="statement not covered" >            const after = (err, data) =&gt; <span class="cstat-no" title="statement not covered" >this.validate(err, data, next);</span></span>
+<span class="cstat-no" title="statement not covered" >            request._protect.run(after, (exit) =&gt; {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                const strategy = this.manager._strategies[name];</span>
+<span class="cstat-no" title="statement not covered" >                const reply = request.server._replier.interface(request, strategy.realm, { data: true }, (err) =&gt; <span class="cstat-no" title="statement not covered" >exit(err, reply._data))</span>;</span>
+<span class="cstat-no" title="statement not covered" >                strategy.methods.authenticate(request, reply);</span>
+            });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            return;</span>
+        }
+&nbsp;
+        // No more strategies
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        const err = Boom.unauthorized('Missing authentication', this.errors);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (config.mode === 'optional' ||</span>
+            config.mode === 'try') {
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            request.auth.isAuthenticated = false;</span>
+<span class="cstat-no" title="statement not covered" >            request.auth.credentials = null;</span>
+<span class="cstat-no" title="statement not covered" >            request.auth.error = err;</span>
+<span class="cstat-no" title="statement not covered" >            request._log(['auth', 'unauthenticated']);</span>
+<span class="cstat-no" title="statement not covered" >            return next();</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        return next(err);</span>
+    }
+&nbsp;
+    validate<span class="fstat-no" title="function not covered" >(err, result, next) {</span>                 // err can be Boom, Error, or a valid response object
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        const config = this.config;</span>
+<span class="cstat-no" title="statement not covered" >        const request = this.request;</span>
+<span class="cstat-no" title="statement not covered" >        const name = config.strategies[this.current] || 'bypass';</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        result = result || {};</span>
+&nbsp;
+        // Invalid
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (!err &amp;&amp;</span>
+            !result.credentials) {
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            return next(Boom.badImplementation('Authentication response missing both error and credentials'));</span>
+        }
+&nbsp;
+        // Unauthenticated
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (err) {</span>
+<span class="cstat-no" title="statement not covered" >            if (err instanceof Error === false) {</span>
+<span class="cstat-no" title="statement not covered" >                request._log(['auth', 'unauthenticated', 'response', name], err.statusCode);</span>
+<span class="cstat-no" title="statement not covered" >                return next(err);</span>
+            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if (err.isMissing) {</span>
+&nbsp;
+                // Try next name
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                request._log(['auth', 'unauthenticated', 'missing', name], err);</span>
+<span class="cstat-no" title="statement not covered" >                this.errors.push(err.output.headers['WWW-Authenticate']);</span>
+<span class="cstat-no" title="statement not covered" >                return this.execute(next);</span>
+            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if (config.mode === 'try') {</span>
+<span class="cstat-no" title="statement not covered" >                request.auth.isAuthenticated = false;</span>
+<span class="cstat-no" title="statement not covered" >                request.auth.strategy = name;</span>
+<span class="cstat-no" title="statement not covered" >                request.auth.credentials = result.credentials;</span>
+<span class="cstat-no" title="statement not covered" >                request.auth.artifacts = result.artifacts;</span>
+<span class="cstat-no" title="statement not covered" >                request.auth.error = err;</span>
+<span class="cstat-no" title="statement not covered" >                request._log(['auth', 'unauthenticated', 'try', name], err);</span>
+<span class="cstat-no" title="statement not covered" >                return next();</span>
+            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            request._log(['auth', 'unauthenticated', 'error', name], err);</span>
+<span class="cstat-no" title="statement not covered" >            return next(err);</span>
+        }
+&nbsp;
+        // Authenticated
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        const credentials = result.credentials;</span>
+<span class="cstat-no" title="statement not covered" >        request.auth.strategy = name;</span>
+<span class="cstat-no" title="statement not covered" >        request.auth.credentials = credentials;</span>
+<span class="cstat-no" title="statement not covered" >        request.auth.artifacts = result.artifacts;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        const authenticated = () =&gt; {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            request._log(['auth', name]);</span>
+<span class="cstat-no" title="statement not covered" >            request.auth.isAuthenticated = true;</span>
+<span class="cstat-no" title="statement not covered" >            return next();</span>
+        };
+&nbsp;
+        // Check access rules
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        const error = internals.access(request, config, credentials, name);</span>
+<span class="cstat-no" title="statement not covered" >        if (!error) {</span>
+<span class="cstat-no" title="statement not covered" >            return authenticated();</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        request._log(error.tags, error.data);</span>
+<span class="cstat-no" title="statement not covered" >        return next(error.err);</span>
+    }
+};
+&nbsp;
+&nbsp;
+internals.access = <span class="fstat-no" title="function not covered" >function (request, config, credentials, name) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!config.access) {</span>
+<span class="cstat-no" title="statement not covered" >        return null;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    const requestEntity = (credentials.user ? 'user' : 'app');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    const scopeErrors = [];</span>
+<span class="cstat-no" title="statement not covered" >    for (let i = 0; i &lt; config.access.length; ++i) {</span>
+<span class="cstat-no" title="statement not covered" >        const access = config.access[i];</span>
+&nbsp;
+        // Check entity
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        const entity = access.entity;</span>
+<span class="cstat-no" title="statement not covered" >        if (entity &amp;&amp;</span>
+            entity !== 'any' &amp;&amp;
+            entity !== requestEntity) {
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            continue;</span>
+        }
+&nbsp;
+        // Check scope
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        let scope = access.scope;</span>
+<span class="cstat-no" title="statement not covered" >        if (scope) {</span>
+<span class="cstat-no" title="statement not covered" >            if (!credentials.scope) {</span>
+<span class="cstat-no" title="statement not covered" >                scopeErrors.push(scope);</span>
+<span class="cstat-no" title="statement not covered" >                continue;</span>
+            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            scope = internals.expandScope(request, scope);</span>
+<span class="cstat-no" title="statement not covered" >            if (!internals.validateScope(credentials, scope, 'required') ||</span>
+                !internals.validateScope(credentials, scope, 'selection') ||
+                !internals.validateScope(credentials, scope, 'forbidden')) {
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                scopeErrors.push(scope);</span>
+<span class="cstat-no" title="statement not covered" >                continue;</span>
+            }
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        return null;</span>
+    }
+&nbsp;
+    // Scope error
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (scopeErrors.length) {</span>
+<span class="cstat-no" title="statement not covered" >        const data = { got: credentials.scope, need: scopeErrors };</span>
+<span class="cstat-no" title="statement not covered" >        return { err: Boom.forbidden('Insufficient scope', data), tags: ['auth', 'scope', 'error', name], data };</span>
+    }
+&nbsp;
+    // Entity error
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (requestEntity === 'app') {</span>
+<span class="cstat-no" title="statement not covered" >        return { err: Boom.forbidden('Application credentials cannot be used on a user endpoint'), tags: ['auth', 'entity', 'user', 'error', name] };</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return { err: Boom.forbidden('User credentials cannot be used on an application endpoint'), tags: ['auth', 'entity', 'app', 'error', name] };</span>
+};
+&nbsp;
+&nbsp;
+internals.expandScope = <span class="fstat-no" title="function not covered" >function (request, scope) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!scope._parameters) {</span>
+<span class="cstat-no" title="statement not covered" >        return scope;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    const expanded = {</span>
+        required: internals.expandScopeType(request, scope, 'required'),
+        selection: internals.expandScopeType(request, scope, 'selection'),
+        forbidden: internals.expandScopeType(request, scope, 'forbidden')
+    };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return expanded;</span>
+};
+&nbsp;
+&nbsp;
+internals.expandScopeType = <span class="fstat-no" title="function not covered" >function (request, scope, type) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!scope[type] ||</span>
+        !scope._parameters[type]) {
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        return scope[type];</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    const expanded = [];</span>
+<span class="cstat-no" title="statement not covered" >    const context = {</span>
+        params: request.params,
+        query: request.query
+    };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    for (let i = 0; i &lt; scope[type].length; ++i) {</span>
+<span class="cstat-no" title="statement not covered" >        expanded.push(Hoek.reachTemplate(context, scope[type][i]));</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return expanded;</span>
+};
+&nbsp;
+&nbsp;
+internals.validateScope = <span class="fstat-no" title="function not covered" >function (credentials, scope, type) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!scope[type]) {</span>
+<span class="cstat-no" title="statement not covered" >        return true;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    const count = (typeof credentials.scope === 'string' ? (scope[type].indexOf(credentials.scope) !== -1 ? 1 : 0)</span>
+                                                         : Hoek.intersect(scope[type], credentials.scope).length);
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (type === 'forbidden') {</span>
+<span class="cstat-no" title="statement not covered" >        return count === 0;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (type === 'required') {</span>
+<span class="cstat-no" title="statement not covered" >        return count === scope.required.length;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return !!count;</span>
+};
+&nbsp;
+&nbsp;</pre></td></tr>
+</table></pre>
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a> at Tue Apr 11 2017 06:46:31 GMT+0000 (UTC)</div>
+</div>
+</body>
+</html>

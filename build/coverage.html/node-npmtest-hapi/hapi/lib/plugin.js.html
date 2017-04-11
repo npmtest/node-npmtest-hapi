@@ -1,0 +1,2033 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for node-npmtest-hapi/hapi/lib/plugin.js</title>
+    <meta charset="utf-8">
+    <style>
+        body, html {
+            margin:0; padding: 0;
+        }
+        body {
+            font-family: Arial, Helvetica;
+            font-size: 10pt;
+        }
+        div.header, div.footer {
+            background: #eee;
+            padding: 1em;
+        }
+        div.header {
+            height: 160px;
+            padding: 0 1em 0 1em;
+            z-index: 100;
+            position: fixed;
+            top: 0;
+            border-bottom: 1px solid #666;
+            width: 100%;
+        }
+        div.footer {
+            border-top: 1px solid #666;
+        }
+        div.body {
+            margin-top: 170px;
+        }
+        div.meta {
+            font-size: 90%;
+            text-align: center;
+        }
+        h1, h2, h3 {
+            font-weight: normal;
+        }
+        h1 {
+            font-size: 12pt;
+        }
+        h2 {
+            font-size: 10pt;
+        }
+        pre {
+            font-family: Menlo, Monaco, Consolas, Courier New, monospace;
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+            tab-size: 2;
+        }
+
+        div.path { font-size: 110%; }
+        div.path a:link, div.path a:visited { color: #000; }
+        table.coverage { border-collapse: collapse; margin:0; padding: 0 }
+
+        table.coverage td {
+            margin: 0;
+            padding: 0;
+            color: #111;
+            vertical-align: top;
+        }
+        table.coverage td.line-count {
+            width: 50px;
+            text-align: right;
+            padding-right: 5px;
+        }
+        table.coverage td.line-coverage {
+            color: #777 !important;
+            text-align: right;
+            border-left: 1px solid #666;
+            border-right: 1px solid #666;
+        }
+
+        table.coverage td.text {
+        }
+
+        table.coverage td span.cline-any {
+            display: inline-block;
+            padding: 0 5px;
+            width: 40px;
+        }
+        table.coverage td span.cline-neutral {
+            background: #eee;
+        }
+        table.coverage td span.cline-yes {
+            background: #b5d592;
+            color: #999;
+        }
+        table.coverage td span.cline-no {
+            background: #fc8c84;
+        }
+
+        .cstat-yes { color: #111; }
+        .cstat-no { background: #fc8c84; color: #111; }
+        .fstat-no { background: #ffc520; color: #111 !important; }
+        .cbranch-no { background:  yellow !important; color: #111; }
+
+        .cstat-skip { background: #ddd; color: #111; }
+        .fstat-skip { background: #ddd; color: #111 !important; }
+        .cbranch-skip { background: #ddd !important; color: #111; }
+
+        .missing-if-branch {
+            display: inline-block;
+            margin-right: 10px;
+            position: relative;
+            padding: 0 4px;
+            background: black;
+            color: yellow;
+        }
+
+        .skip-if-branch {
+            display: none;
+            margin-right: 10px;
+            position: relative;
+            padding: 0 4px;
+            background: #ccc;
+            color: white;
+        }
+
+        .missing-if-branch .typ, .skip-if-branch .typ {
+            color: inherit !important;
+        }
+
+        .entity, .metric { font-weight: bold; }
+        .metric { display: inline-block; border: 1px solid #333; padding: 0.3em; background: white; }
+        .metric small { font-size: 80%; font-weight: normal; color: #666; }
+
+        div.coverage-summary table { border-collapse: collapse; margin: 3em; font-size: 110%; }
+        div.coverage-summary td, div.coverage-summary table  th { margin: 0; padding: 0.25em 1em; border-top: 1px solid #666; border-bottom: 1px solid #666; }
+        div.coverage-summary th { text-align: left; border: 1px solid #666; background: #eee; font-weight: normal; }
+        div.coverage-summary th.file { border-right: none !important; }
+        div.coverage-summary th.pic { border-left: none !important; text-align: right; }
+        div.coverage-summary th.pct { border-right: none !important; }
+        div.coverage-summary th.abs { border-left: none !important; text-align: right; }
+        div.coverage-summary td.pct { text-align: right; border-left: 1px solid #666; }
+        div.coverage-summary td.abs { text-align: right; font-size: 90%; color: #444; border-right: 1px solid #666; }
+        div.coverage-summary td.file { text-align: right; border-left: 1px solid #666; white-space: nowrap;  }
+        div.coverage-summary td.pic { min-width: 120px !important;  }
+        div.coverage-summary a:link { color: #000; }
+        div.coverage-summary a:visited { color: #333; }
+        div.coverage-summary tfoot td { border-top: 1px solid #666; }
+
+        div.coverage-summary .yui3-datatable-sort-indicator, div.coverage-summary .dummy-sort-indicator {
+            height: 10px;
+            width: 7px;
+            display: inline-block;
+            margin-left: 0.5em;
+        }
+        div.coverage-summary .yui3-datatable-sort-indicator {
+            background: no-repeat scroll 0 0 transparent;
+        }
+        div.coverage-summary .yui3-datatable-sorted .yui3-datatable-sort-indicator {
+            background-position: 0 -20px;
+        }
+        div.coverage-summary .yui3-datatable-sorted-desc .yui3-datatable-sort-indicator {
+            background-position: 0 -10px;
+        }
+
+        .high { background: #b5d592 !important; }
+        .medium { background: #ffe87c !important; }
+        .low { background: #fc8c84 !important; }
+
+        span.cover-fill, span.cover-empty {
+            display:inline-block;
+            border:1px solid #444;
+            background: white;
+            height: 12px;
+        }
+        span.cover-fill {
+            background: #ccc;
+            border-right: 1px solid #444;
+        }
+        span.cover-empty {
+            background: white;
+            border-left: none;
+        }
+        span.cover-full {
+            border-right: none !important;
+        }
+        pre.prettyprint {
+            border: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        .com { color: #999 !important; }
+        .ignore-none { color: #999; font-weight: normal; }
+
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1 style="font-weight: bold;">
+        <a href="https://github.com/npmtest/node-npmtest-hapi">npmtest-hapi (v0.0.1)</a>
+    </h1>
+    <h1>Code coverage report for <span class="entity">node-npmtest-hapi/hapi/lib/plugin.js</span></h1>
+    <h2>
+        
+        Statements: <span class="metric">15.95% <small>(41 / 257)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Branches: <span class="metric">0% <small>(0 / 138)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Functions: <span class="metric">0% <small>(0 / 30)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Lines: <span class="metric">15.95% <small>(41 / 257)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">node-npmtest-hapi/hapi/lib/</a> &#187; plugin.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590
+591
+592
+593
+594
+595
+596
+597
+598
+599
+600
+601
+602
+603
+604</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict';
+&nbsp;
+// Load modules
+&nbsp;
+const Catbox = require('catbox');
+const Hoek = require('hoek');
+const Items = require('items');
+const Podium = require('podium');
+const Connection = require('./connection');
+const Ext = require('./ext');
+const Package = require('../package.json');
+const Promises = require('./promises');
+const Schema = require('./schema');
+&nbsp;
+&nbsp;
+// Declare internals
+&nbsp;
+const internals = {};
+&nbsp;
+&nbsp;
+exports = module.exports = internals.Plugin = <span class="fstat-no" title="function not covered" >function (server, connections, env, parent) {</span>         // env can be a realm or plugin name
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    Podium.call(this, [connections &amp;&amp; connections.length ? connections : Connection._events, server._events]);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this._parent = parent;</span>
+&nbsp;
+    // Public interface
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.root = server;</span>
+<span class="cstat-no" title="statement not covered" >    this.app = this.root._app;</span>
+<span class="cstat-no" title="statement not covered" >    this.connections = connections;</span>
+<span class="cstat-no" title="statement not covered" >    this.load = this.root._heavy.load;</span>
+<span class="cstat-no" title="statement not covered" >    this.methods = this.root._methods.methods;</span>
+<span class="cstat-no" title="statement not covered" >    this.mime = this.root._mime;</span>
+<span class="cstat-no" title="statement not covered" >    this.plugins = this.root._plugins;</span>
+<span class="cstat-no" title="statement not covered" >    this.settings = this.root._settings;</span>
+<span class="cstat-no" title="statement not covered" >    this.version = Package.version;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.realm = typeof env !== 'string' ? env : {</span>
+        _extensions: {
+            onPreAuth: new Ext('onPreAuth', this.root),
+            onPostAuth: new Ext('onPostAuth', this.root),
+            onPreHandler: new Ext('onPreHandler', this.root),
+            onPostHandler: new Ext('onPostHandler', this.root),
+            onPreResponse: new Ext('onPreResponse', this.root)
+        },
+        modifiers: {
+            route: {}
+        },
+        plugin: env,
+        pluginOptions: {},
+        plugins: {},
+        settings: {
+            bind: undefined,
+            files: {
+                relativeTo: undefined
+            }
+        }
+    };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.auth = {</span>
+        default: (opts) =&gt; <span class="cstat-no" title="statement not covered" >this._applyChild('auth.default', 'auth', 'default', [opts]),</span>
+        scheme: (name, scheme) =&gt; <span class="cstat-no" title="statement not covered" >this._applyChild('auth.scheme', 'auth', 'scheme', [name, scheme]),</span>
+        strategy: (name, scheme, mode, opts) =&gt; <span class="cstat-no" title="statement not covered" >this._applyChild('auth.strategy', 'auth', 'strategy', [name, scheme, mode, opts]),</span>
+        test: (name, request, next) =&gt; <span class="cstat-no" title="statement not covered" >request.connection.auth.test(name, request, next)</span>
+    };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.cache.provision = (opts, callback) =&gt; {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (!callback) {</span>
+<span class="cstat-no" title="statement not covered" >            return Promises.wrap(null, this.cache.provision, [opts]);</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        return this.root._createCache(opts, callback);</span>
+    };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this._single();</span>
+&nbsp;
+    // Decorations
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    const methods = Object.keys(this.root._decorations);</span>
+<span class="cstat-no" title="statement not covered" >    for (let i = 0; i &lt; methods.length; ++i) {</span>
+<span class="cstat-no" title="statement not covered" >        const method = methods[i];</span>
+<span class="cstat-no" title="statement not covered" >        this[method] = this.root._decorations[method];</span>
+    }
+};
+&nbsp;
+Hoek.inherits(internals.Plugin, Podium);
+&nbsp;
+&nbsp;
+internals.Plugin.prototype._single = <span class="fstat-no" title="function not covered" >function () {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (this.connections &amp;&amp;</span>
+        this.connections.length === 1) {
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        this.info = this.connections[0].info;</span>
+<span class="cstat-no" title="statement not covered" >        this.listener = this.connections[0].listener;</span>
+<span class="cstat-no" title="statement not covered" >        this.registrations = this.connections[0].registrations;</span>
+<span class="cstat-no" title="statement not covered" >        this.auth.api = this.connections[0].auth.api;</span>
+    }
+    else {
+<span class="cstat-no" title="statement not covered" >        this.info = null;</span>
+<span class="cstat-no" title="statement not covered" >        this.listener = null;</span>
+<span class="cstat-no" title="statement not covered" >        this.registrations = null;</span>
+<span class="cstat-no" title="statement not covered" >        this.auth.api = null;</span>
+    }
+};
+&nbsp;
+&nbsp;
+internals.Plugin.prototype.select = <span class="fstat-no" title="function not covered" >function (/* labels */) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    let labels = [];</span>
+<span class="cstat-no" title="statement not covered" >    for (let i = 0; i &lt; arguments.length; ++i) {</span>
+<span class="cstat-no" title="statement not covered" >        labels.push(arguments[i]);</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    labels = Hoek.flatten(labels);</span>
+<span class="cstat-no" title="statement not covered" >    return this._select(labels);</span>
+};
+&nbsp;
+&nbsp;
+internals.Plugin.prototype._select = <span class="fstat-no" title="function not covered" >function (labels, plugin) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    let connections = this.connections;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (labels &amp;&amp;</span>
+        labels.length) {            // Captures both empty arrays and empty strings
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        Hoek.assert(this.connections, 'Cannot select inside a connectionless plugin');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        connections = [];</span>
+<span class="cstat-no" title="statement not covered" >        for (let i = 0; i &lt; this.connections.length; ++i) {</span>
+<span class="cstat-no" title="statement not covered" >            const connection = this.connections[i];</span>
+<span class="cstat-no" title="statement not covered" >            if (Hoek.intersect(connection.settings.labels, labels).length) {</span>
+<span class="cstat-no" title="statement not covered" >                connections.push(connection);</span>
+            }
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (!plugin &amp;&amp;</span>
+            connections.length === this.connections.length) {
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            return this;</span>
+        }
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    const env = (plugin !== undefined ? plugin : this.realm); </span>                    // Allow empty string
+<span class="cstat-no" title="statement not covered" >    return new internals.Plugin(this.root, connections, env, this);</span>
+};
+&nbsp;
+&nbsp;
+internals.Plugin.prototype._clone = <span class="fstat-no" title="function not covered" >function (connections, plugin) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    const env = (plugin !== undefined ? plugin : this.realm); </span>                    // Allow empty string
+<span class="cstat-no" title="statement not covered" >    return new internals.Plugin(this.root, connections, env, this);</span>
+};
+&nbsp;
+&nbsp;
+internals.Plugin.prototype.register = <span class="fstat-no" title="function not covered" >function (plugins /*, [options], callback */) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    let options = (typeof arguments[1] === 'object' ? arguments[1] : {});</span>
+<span class="cstat-no" title="statement not covered" >    const callback = (typeof arguments[1] === 'object' ? arguments[2] : arguments[1]);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!callback) {</span>
+<span class="cstat-no" title="statement not covered" >        return Promises.wrap(this, this.register, [plugins, options]);</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (this.realm.modifiers.route.prefix ||</span>
+        this.realm.modifiers.route.vhost) {
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        options = Hoek.clone(options);</span>
+<span class="cstat-no" title="statement not covered" >        options.routes = options.routes || {};</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        options.routes.prefix = (this.realm.modifiers.route.prefix || '') + (options.routes.prefix || '') || undefined;</span>
+<span class="cstat-no" title="statement not covered" >        options.routes.vhost = this.realm.modifiers.route.vhost || options.routes.vhost;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    options = Schema.apply('register', options);</span>
+&nbsp;
+    /*
+        const register = function (server, options, next) { return next(); };
+        register.attributes = {
+            pkg: require('../package.json'),
+            name: 'plugin',
+            version: '1.1.1',
+            multiple: false,
+            dependencies: [],
+            connections: false,
+            once: true
+        };
+&nbsp;
+        const item = {
+            register: register,
+            options: options        // -optional--
+        };
+&nbsp;
+        - OR -
+&nbsp;
+        const item = function () {}
+        item.register = register;
+        item.options = options;
+&nbsp;
+        const plugins = register, items, [register, item]
+    */
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    const registrations = [];</span>
+<span class="cstat-no" title="statement not covered" >    plugins = [].concat(plugins);</span>
+<span class="cstat-no" title="statement not covered" >    for (let i = 0; i &lt; plugins.length; ++i) {</span>
+<span class="cstat-no" title="statement not covered" >        let plugin = plugins[i];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (typeof plugin === 'function') {</span>
+<span class="cstat-no" title="statement not covered" >            if (!plugin.register) {                                 // plugin is register() function</span>
+<span class="cstat-no" title="statement not covered" >                plugin = { register: plugin };</span>
+            }
+            else {
+<span class="cstat-no" title="statement not covered" >                plugin = Hoek.shallow(plugin); </span>                     // Convert function to object
+            }
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (plugin.register.register) {                             // Required plugin</span>
+<span class="cstat-no" title="statement not covered" >            plugin.register = plugin.register.register;</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        plugin = Schema.apply('plugin', plugin);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        const attributes = plugin.register.attributes;</span>
+<span class="cstat-no" title="statement not covered" >        const registration = {</span>
+            register: plugin.register,
+            name: attributes.name || attributes.pkg.name,
+            version: attributes.version || attributes.pkg.version,
+            multiple: attributes.multiple,
+            pluginOptions: plugin.options,
+            dependencies: attributes.dependencies,
+            connections: attributes.connections,
+            options: {
+                once: attributes.once || (plugin.once !== undefined ? plugin.once : options.once),
+                routes: {
+                    prefix: plugin.routes.prefix || options.routes.prefix,
+                    vhost: plugin.routes.vhost || options.routes.vhost
+                },
+                select: plugin.select || options.select
+            }
+        };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        registrations.push(registration);</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.root._registring = true;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    const each = (item, next) =&gt; {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        const selection = this._select(item.options.select, item.name);</span>
+<span class="cstat-no" title="statement not covered" >        selection.realm.modifiers.route.prefix = item.options.routes.prefix;</span>
+<span class="cstat-no" title="statement not covered" >        selection.realm.modifiers.route.vhost = item.options.routes.vhost;</span>
+<span class="cstat-no" title="statement not covered" >        selection.realm.pluginOptions = item.pluginOptions || {};</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        const registrationData = {</span>
+            version: item.version,
+            name: item.name,
+            options: item.pluginOptions,
+            attributes: item.register.attributes
+        };
+&nbsp;
+        // Protect against multiple registrations
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        const connectionless = (item.connections === 'conditional' ? selection.connections.length === 0 : !item.connections);</span>
+<span class="cstat-no" title="statement not covered" >        if (connectionless) {</span>
+<span class="cstat-no" title="statement not covered" >            if (this.root._registrations[item.name]) {</span>
+<span class="cstat-no" title="statement not covered" >                if (item.options.once) {</span>
+<span class="cstat-no" title="statement not covered" >                    return next();</span>
+                }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                Hoek.assert(item.multiple, 'Plugin', item.name, 'already registered');</span>
+            }
+            else {
+<span class="cstat-no" title="statement not covered" >                this.root._registrations[item.name] = registrationData;</span>
+            }
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        const connections = [];</span>
+<span class="cstat-no" title="statement not covered" >        if (selection.connections) {</span>
+<span class="cstat-no" title="statement not covered" >            for (let i = 0; i &lt; selection.connections.length; ++i) {</span>
+<span class="cstat-no" title="statement not covered" >                const connection = selection.connections[i];</span>
+<span class="cstat-no" title="statement not covered" >                if (connection.registrations[item.name]) {</span>
+<span class="cstat-no" title="statement not covered" >                    if (item.options.once) {</span>
+<span class="cstat-no" title="statement not covered" >                        continue;</span>
+                    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    Hoek.assert(item.multiple, 'Plugin', item.name, 'already registered in:', connection.info.uri);</span>
+                }
+                else {
+<span class="cstat-no" title="statement not covered" >                    connection.registrations[item.name] = registrationData;</span>
+                }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                connections.push(connection);</span>
+            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if (item.options.once &amp;&amp;</span>
+                !connectionless &amp;&amp;
+                !connections.length) {
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                return next(); </span>                                             // All the connections already registered
+            }
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        selection.connections = (connectionless ? null : connections);</span>
+<span class="cstat-no" title="statement not covered" >        selection._single();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (item.dependencies) {</span>
+<span class="cstat-no" title="statement not covered" >            selection.dependency(item.dependencies);</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (connectionless) {</span>
+<span class="cstat-no" title="statement not covered" >            selection.connection = this.root.connection;</span>
+        }
+&nbsp;
+        // Register
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        item.register(selection, item.pluginOptions || {}, next);</span>
+    };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    Items.serial(registrations, each, (err) =&gt; {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        this.root._registring = false;</span>
+<span class="cstat-no" title="statement not covered" >        return Hoek.nextTick(callback)(err);</span>
+    });
+};
+&nbsp;
+&nbsp;
+internals.Plugin.prototype.bind = <span class="fstat-no" title="function not covered" >function (context) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(typeof context === 'object', 'bind must be an object');</span>
+<span class="cstat-no" title="statement not covered" >    this.realm.settings.bind = context;</span>
+};
+&nbsp;
+&nbsp;
+internals.Plugin.prototype.cache = <span class="fstat-no" title="function not covered" >function (options, _segment) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    options = Schema.apply('cachePolicy', options);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    const segment = options.segment || _segment || (this.realm.plugin ? '!' + this.realm.plugin : '');</span>
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(segment, 'Missing cache segment name');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    const cacheName = options.cache || '_default';</span>
+<span class="cstat-no" title="statement not covered" >    const cache = this.root._caches[cacheName];</span>
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(cache, 'Unknown cache', cacheName);</span>
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(!cache.segments[segment] || cache.shared || options.shared, 'Cannot provision the same cache segment more than once');</span>
+<span class="cstat-no" title="statement not covered" >    cache.segments[segment] = true;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return new Catbox.Policy(options, cache.client, segment);</span>
+};
+&nbsp;
+&nbsp;
+internals.Plugin.prototype.decoder = <span class="fstat-no" title="function not covered" >function (encoding, decoder) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this._apply('decoder', Connection.prototype.decoder, [encoding, decoder]);</span>
+};
+&nbsp;
+&nbsp;
+internals.Plugin.prototype.decorate = <span class="fstat-no" title="function not covered" >function (type, property, method, options) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(['reply', 'request', 'server'].indexOf(type) !== -1, 'Unknown decoration type:', type);</span>
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(property, 'Missing decoration property name');</span>
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(typeof property === 'string', 'Decoration property must be a string');</span>
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(property[0] !== '_', 'Property name cannot begin with an underscore:', property);</span>
+&nbsp;
+    // Request
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (type === 'request') {</span>
+<span class="cstat-no" title="statement not covered" >        return this.root._requestor.decorate(property, method, options);</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(!options, 'Cannot specify options for non-request decoration');</span>
+&nbsp;
+    // Reply
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (type === 'reply') {</span>
+<span class="cstat-no" title="statement not covered" >        return this.root._replier.decorate(property, method);</span>
+    }
+&nbsp;
+    // Server
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(!this.root._decorations[property], 'Server decoration already defined:', property);</span>
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(this[property] === undefined &amp;&amp; this.root[property] === undefined, 'Cannot override the built-in server interface method:', property);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.root._decorations[property] = method;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this[property] = method;</span>
+<span class="cstat-no" title="statement not covered" >    let parent = this._parent;</span>
+<span class="cstat-no" title="statement not covered" >    while (parent) {</span>
+<span class="cstat-no" title="statement not covered" >        parent[property] = method;</span>
+<span class="cstat-no" title="statement not covered" >        parent = parent._parent;</span>
+    }
+};
+&nbsp;
+&nbsp;
+internals.Plugin.prototype.dependency = <span class="fstat-no" title="function not covered" >function (dependencies, after) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(this.realm.plugin, 'Cannot call dependency() outside of a plugin');</span>
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(!after || typeof after === 'function', 'Invalid after method');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    dependencies = [].concat(dependencies);</span>
+<span class="cstat-no" title="statement not covered" >    this.root._dependencies.push({ plugin: this.realm.plugin, connections: this.connections, deps: dependencies });</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (after) {</span>
+<span class="cstat-no" title="statement not covered" >        this.ext('onPreStart', after, { after: dependencies });</span>
+    }
+};
+&nbsp;
+&nbsp;
+internals.Plugin.prototype.emit = <span class="fstat-no" title="function not covered" >function (criteria, data, callback) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.root._events.emit(criteria, data, callback);</span>
+};
+&nbsp;
+&nbsp;
+internals.Plugin.prototype.encoder = <span class="fstat-no" title="function not covered" >function (encoding, encoder) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this._apply('encoder', Connection.prototype.encoder, [encoding, encoder]);</span>
+};
+&nbsp;
+&nbsp;
+internals.Plugin.prototype.event = <span class="fstat-no" title="function not covered" >function (event) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.root._events.registerEvent(event);</span>
+};
+&nbsp;
+&nbsp;
+internals.Plugin.prototype.expose = <span class="fstat-no" title="function not covered" >function (key, value) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(this.realm.plugin, 'Cannot call expose() outside of a plugin');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    const plugin = this.realm.plugin;</span>
+<span class="cstat-no" title="statement not covered" >    this.root.plugins[plugin] = this.root.plugins[plugin] || {};</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (typeof key === 'string') {</span>
+<span class="cstat-no" title="statement not covered" >        this.root.plugins[plugin][key] = value;</span>
+    }
+    else {
+<span class="cstat-no" title="statement not covered" >        Hoek.merge(this.root.plugins[plugin], key);</span>
+    }
+};
+&nbsp;
+&nbsp;
+internals.Plugin.prototype.ext = <span class="fstat-no" title="function not covered" >function (events) {</span>        // (event, method, options) -OR- (events)
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (typeof events === 'string') {</span>
+<span class="cstat-no" title="statement not covered" >        events = { type: arguments[0], method: arguments[1], options: arguments[2] };</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    events = Schema.apply('exts', events);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    for (let i = 0; i &lt; events.length; ++i) {</span>
+<span class="cstat-no" title="statement not covered" >        this._ext(events[i]);</span>
+    }
+};
+&nbsp;
+&nbsp;
+internals.Plugin.prototype._ext = <span class="fstat-no" title="function not covered" >function (event) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    event = Hoek.shallow(event);</span>
+<span class="cstat-no" title="statement not covered" >    event.plugin = this;</span>
+<span class="cstat-no" title="statement not covered" >    const type = event.type;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!this.root._extensions[type]) {</span>
+&nbsp;
+        // Realm route extensions
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (event.options.sandbox === 'plugin') {</span>
+<span class="cstat-no" title="statement not covered" >            Hoek.assert(this.realm._extensions[type], 'Unknown event type', type);</span>
+<span class="cstat-no" title="statement not covered" >            return this.realm._extensions[type].add(event);</span>
+        }
+&nbsp;
+        // Connection route extensions
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        return this._apply('ext', Connection.prototype._ext, [event]);</span>
+    }
+&nbsp;
+    // Server extensions
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(!event.options.sandbox, 'Cannot specify sandbox option for server extension');</span>
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(type !== 'onPreStart' || this.root._state === 'stopped', 'Cannot add onPreStart (after) extension after the server was initialized');</span>
+<span class="cstat-no" title="statement not covered" >    this.root._extensions[type].add(event);</span>
+};
+&nbsp;
+&nbsp;
+internals.Plugin.prototype.handler = <span class="fstat-no" title="function not covered" >function (name, method) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(typeof name === 'string', 'Invalid handler name');</span>
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(!this.root._handlers[name], 'Handler name already exists:', name);</span>
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(typeof method === 'function', 'Handler must be a function:', name);</span>
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(!method.defaults || typeof method.defaults === 'object' || typeof method.defaults === 'function', 'Handler defaults property must be an object or function');</span>
+<span class="cstat-no" title="statement not covered" >    this.root._handlers[name] = method;</span>
+};
+&nbsp;
+&nbsp;
+internals.Plugin.prototype.inject = <span class="fstat-no" title="function not covered" >function (options, callback) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(this.connections.length === 1, 'Method not available when the selection has more than one connection or none');</span>
+<span class="cstat-no" title="statement not covered" >    return this.connections[0].inject(options, callback);</span>
+};
+&nbsp;
+&nbsp;
+internals.Plugin.prototype.log = <span class="fstat-no" title="function not covered" >function (tags, data, timestamp, _internal) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    tags = [].concat(tags);</span>
+<span class="cstat-no" title="statement not covered" >    timestamp = (timestamp ? (timestamp instanceof Date ? timestamp.getTime() : timestamp) : Date.now());</span>
+<span class="cstat-no" title="statement not covered" >    const internal = !!_internal;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    const update = (typeof data !== 'function' ? { timestamp, tags, data, internal } : () =&gt; {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        return { timestamp, tags, data: data(), internal };</span>
+    });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.root._events.emit({ name: 'log', tags }, update);</span>
+};
+&nbsp;
+&nbsp;
+internals.Plugin.prototype._log = <span class="fstat-no" title="function not covered" >function (tags, data) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return this.log(tags, data, null, true);</span>
+};
+&nbsp;
+&nbsp;
+internals.Plugin.prototype.lookup = <span class="fstat-no" title="function not covered" >function (id) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(this.connections.length === 1, 'Method not available when the selection has more than one connection or none');</span>
+<span class="cstat-no" title="statement not covered" >    return this.connections[0].lookup(id);</span>
+};
+&nbsp;
+&nbsp;
+internals.Plugin.prototype.match = <span class="fstat-no" title="function not covered" >function (method, path, host) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(this.connections.length === 1, 'Method not available when the selection has more than one connection or none');</span>
+<span class="cstat-no" title="statement not covered" >    return this.connections[0].match(method, path, host);</span>
+};
+&nbsp;
+&nbsp;
+internals.Plugin.prototype.method = <span class="fstat-no" title="function not covered" >function (name, method, options) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return this.root._methods.add(name, method, options, this.realm);</span>
+};
+&nbsp;
+&nbsp;
+internals.Plugin.prototype.path = <span class="fstat-no" title="function not covered" >function (relativeTo) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(relativeTo &amp;&amp; typeof relativeTo === 'string', 'relativeTo must be a non-empty string');</span>
+<span class="cstat-no" title="statement not covered" >    this.realm.settings.files.relativeTo = relativeTo;</span>
+};
+&nbsp;
+&nbsp;
+internals.Plugin.prototype.route = <span class="fstat-no" title="function not covered" >function (options) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(arguments.length === 1, 'Method requires a single object argument or a single array of objects');</span>
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(typeof options === 'object', 'Invalid route options');</span>
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(this.connections, 'Cannot add route from a connectionless plugin');</span>
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(this.connections.length, 'Cannot add a route without any connections');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this._apply('route', Connection.prototype._route, [options, this]);</span>
+};
+&nbsp;
+&nbsp;
+internals.Plugin.prototype.state = <span class="fstat-no" title="function not covered" >function (name, options) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this._applyChild('state', 'states', 'add', [name, options]);</span>
+};
+&nbsp;
+&nbsp;
+internals.Plugin.prototype.table = <span class="fstat-no" title="function not covered" >function (host) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(this.connections, 'Cannot request routing table from a connectionless plugin');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    const table = [];</span>
+<span class="cstat-no" title="statement not covered" >    for (let i = 0; i &lt; this.connections.length; ++i) {</span>
+<span class="cstat-no" title="statement not covered" >        const connection = this.connections[i];</span>
+<span class="cstat-no" title="statement not covered" >        table.push({ info: connection.info, labels: connection.settings.labels, table: connection.table(host) });</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return table;</span>
+};
+&nbsp;
+&nbsp;
+internals.Plugin.prototype._apply = <span class="fstat-no" title="function not covered" >function (type, func, args) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(this.connections, 'Cannot add ' + type + ' from a connectionless plugin');</span>
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(this.connections.length, 'Cannot add ' + type + ' without a connection');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    for (let i = 0; i &lt; this.connections.length; ++i) {</span>
+<span class="cstat-no" title="statement not covered" >        func.apply(this.connections[i], args);</span>
+    }
+};
+&nbsp;
+&nbsp;
+internals.Plugin.prototype._applyChild = <span class="fstat-no" title="function not covered" >function (type, child, func, args) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(this.connections, 'Cannot add ' + type + ' from a connectionless plugin');</span>
+<span class="cstat-no" title="statement not covered" >    Hoek.assert(this.connections.length, 'Cannot add ' + type + ' without a connection');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    for (let i = 0; i &lt; this.connections.length; ++i) {</span>
+<span class="cstat-no" title="statement not covered" >        const obj = this.connections[i][child];</span>
+<span class="cstat-no" title="statement not covered" >        obj[func].apply(obj, args);</span>
+    }
+};
+&nbsp;
+&nbsp;</pre></td></tr>
+</table></pre>
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a> at Tue Apr 11 2017 06:46:31 GMT+0000 (UTC)</div>
+</div>
+</body>
+</html>
