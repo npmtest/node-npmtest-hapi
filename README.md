@@ -1,6 +1,6 @@
 # npmtest-hapi
 
-#### test coverage for  [hapi (v16.1.1)](http://hapijs.com)  [![npm package](https://img.shields.io/npm/v/npmtest-hapi.svg?style=flat-square)](https://www.npmjs.org/package/npmtest-hapi) [![travis-ci.org build-status](https://api.travis-ci.org/npmtest/node-npmtest-hapi.svg)](https://travis-ci.org/npmtest/node-npmtest-hapi)
+#### basic test coverage for  [hapi (v16.1.1)](http://hapijs.com)  [![npm package](https://img.shields.io/npm/v/npmtest-hapi.svg?style=flat-square)](https://www.npmjs.org/package/npmtest-hapi) [![travis-ci.org build-status](https://api.travis-ci.org/npmtest/node-npmtest-hapi.svg)](https://travis-ci.org/npmtest/node-npmtest-hapi)
 
 #### HTTP Server framework
 
@@ -10,7 +10,7 @@
 |--:|:--|
 | coverage : | [![istanbul-coverage](https://npmtest.github.io/node-npmtest-hapi/build/coverage.badge.svg)](https://npmtest.github.io/node-npmtest-hapi/build/coverage.html/index.html)|
 | test-report : | [![test-report](https://npmtest.github.io/node-npmtest-hapi/build/test-report.badge.svg)](https://npmtest.github.io/node-npmtest-hapi/build/test-report.html)|
-| build-artifacts : | [![build-artifacts](https://npmtest.github.io/node-npmtest-hapi/glyphicons_144_folder_open.png)](https://github.com/npmtest/node-npmtest-hapi/tree/gh-pages/build)|
+| test-server-github : | [![github.com test-server](https://npmtest.github.io/node-npmtest-hapi/GitHub-Mark-32px.png)](https://npmtest.github.io/node-npmtest-hapi/build/app/index.html) | | build-artifacts : | [![build-artifacts](https://npmtest.github.io/node-npmtest-hapi/glyphicons_144_folder_open.png)](https://github.com/npmtest/node-npmtest-hapi/tree/gh-pages/build)|
 
 - [https://npmtest.github.io/node-npmtest-hapi/build/coverage.html/index.html](https://npmtest.github.io/node-npmtest-hapi/build/coverage.html/index.html)
 
@@ -101,7 +101,8 @@
         "test-cov-html": "lab -a code -r html -o coverage.html -m 3000",
         "test-tap": "lab -a code -r tap -o tests.tap -m 3000"
     },
-    "version": "16.1.1"
+    "version": "16.1.1",
+    "bin": {}
 }
 ```
 

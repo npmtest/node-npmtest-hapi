@@ -1,6 +1,6 @@
 {
     "author": "kai zhu <kaizhu256@gmail.com>",
-    "description": "#### test coverage for  [hapi (v16.1.1)](http://hapijs.com)  [![npm package](https://img.shields.io/npm/v/npmtest-hapi.svg?style=flat-square)](https://www.npmjs.org/package/npmtest-hapi) [![travis-ci.org build-status](https://api.travis-ci.org/npmtest/node-npmtest-hapi.svg)](https://travis-ci.org/npmtest/node-npmtest-hapi)",
+    "description": "#### basic test coverage for  [hapi (v16.1.1)](http://hapijs.com)  [![npm package](https://img.shields.io/npm/v/npmtest-hapi.svg?style=flat-square)](https://www.npmjs.org/package/npmtest-hapi) [![travis-ci.org build-status](https://api.travis-ci.org/npmtest/node-npmtest-hapi.svg)](https://travis-ci.org/npmtest/node-npmtest-hapi)",
     "devDependencies": {
         "electron-lite": "kaizhu256/node-electron-lite#alpha",
         "hapi": "*",
